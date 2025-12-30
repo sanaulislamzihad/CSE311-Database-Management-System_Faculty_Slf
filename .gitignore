@@ -1,11 +1,11 @@
-# Large course assets (keep local; don't push to GitHub)
-*.pdf
-*.zip
-*.jpg
-*.jpeg
-*.png
-*.webp
-*.gif
+# Ignore ONLY oversized files (Git can't ignore by size, so we list the known big ones here).
+# A pre-commit hook also blocks committing any file > 20MB (any type).
+FInal/04-a Entity-Relationship Modeling FA25.pdf
+FInal/04-b Entity-Relationship Modeling FA25.pdf
+FInal/06  Joins Views Integrity Constraints and authorization.pdf
+FInal/Sample question on Normalization.pdf
+FInal/Sample question on (OuterJoin+Norm+views+Integrity+UserMgt)-FA25.pdf
+MIdterm/Sample Questions slide 01 and slide 02 (1).pdf
 
 # OS / editor
 .DS_Store

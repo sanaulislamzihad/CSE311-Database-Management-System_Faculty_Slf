@@ -1,0 +1,37 @@
+#!/bin/sh
+# Block committing any staged file larger than 20 MiB (any file type).
+#
+# Enable once per clone:
+#   git config core.hooksPath .githooks
+
+MAX=$((20 * 1024 * 1024))
+
+fail=0
+
+# Only check files that are staged (Added/Modified/Renamed/Copied)
+git diff --cached --name-only --diff-filter=AMRC | while IFS= read -r path; do
+  [ -z "$path" ] && continue
+
+  # Skip deletions and submodules
+  if ! git cat-file -e ":$path" 2>/dev/null; then
+    continue
+  fi
+
+  size="$(git cat-file -s ":$path" 2>/dev/null || echo 0)"
+
+  if [ "$size" -gt "$MAX" ]; then
+    mib=$(awk "BEGIN { printf \"%.2f\", $size/1024/1024 }")
+    echo "ERROR: '$path' is ${mib} MiB (> 20 MiB). Remove it or use Git LFS." 1>&2
+    fail=1
+  fi
+done
+
+if [ "$fail" -ne 0 ]; then
+  echo "" 1>&2
+  echo "Commit aborted because one or more staged files exceed 20 MiB." 1>&2
+  exit 1
+fi
+
+exit 0
+
+
