@@ -1,0 +1,15 @@
+# Large course assets (keep local; don't push to GitHub)
+*.pdf
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
